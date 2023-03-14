@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HortasIndoor.DataAccess.Migrations
 {
     [DbContext(typeof(HIContext))]
-    [Migration("20230306163751_Identity")]
-    partial class Identity
+    [Migration("20230313225502_LocalizacaoNullable")]
+    partial class LocalizacaoNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace HortasIndoor.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("HortasIndoor.Core.Models.User", b =>
+            modelBuilder.Entity("HortasIndoor.Core.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -42,6 +42,9 @@ namespace HortasIndoor.DataAccess.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Localizacao")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -233,7 +236,7 @@ namespace HortasIndoor.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("HortasIndoor.Core.Models.User", null)
+                    b.HasOne("HortasIndoor.Core.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -242,7 +245,7 @@ namespace HortasIndoor.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("HortasIndoor.Core.Models.User", null)
+                    b.HasOne("HortasIndoor.Core.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -257,7 +260,7 @@ namespace HortasIndoor.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HortasIndoor.Core.Models.User", null)
+                    b.HasOne("HortasIndoor.Core.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,7 +269,7 @@ namespace HortasIndoor.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("HortasIndoor.Core.Models.User", null)
+                    b.HasOne("HortasIndoor.Core.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

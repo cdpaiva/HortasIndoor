@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace HortasIndoor.DataAccess.Data
 {
-    public class HIContext : IdentityDbContext<User>
+    public class HIContext : IdentityDbContext<ApplicationUser>
     {
         public HIContext(DbContextOptions<HIContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
