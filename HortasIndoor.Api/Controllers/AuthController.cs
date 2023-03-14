@@ -12,33 +12,33 @@ using System.Text;
 
 namespace HortasIndoor.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly JwtBearerSettings jwtBearerTokenSettings;
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<AuthController> logger;
 
-        public AuthController(IOptions<JwtBearerSettings> jwtTokenOptions, UserManager<User> userManager)
+        public AuthController(IOptions<JwtBearerSettings> jwtTokenOptions, UserManager<ApplicationUser> userManager, ILogger<AuthController> logger)
         {
             this.jwtBearerTokenSettings = jwtTokenOptions.Value;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDetails userDetails)
         {
-
             if (!ModelState.IsValid || userDetails == null)
             {
                 return new BadRequestObjectResult(new { Message = "User Registration Failed" });
             }
 
-            var identityUser = new User() { UserName = userDetails.UserName, Email = userDetails.Email };
+            var identityUser = new ApplicationUser() { UserName = userDetails.UserName, Email = userDetails.Email };
 
             var result = await userManager.CreateAsync(identityUser, userDetails.Password);
-
 
             if (!result.Succeeded)
             {
@@ -63,7 +63,7 @@ namespace HortasIndoor.Api.Controllers
                 return new BadRequestObjectResult(new { Message = "Login Failed" });
             }
 
-            User user = await ValidateUser(credentials);
+            var user = await ValidateUser(credentials);
 
             if(user == null)
             {
@@ -81,7 +81,7 @@ namespace HortasIndoor.Api.Controllers
             return Ok(new { Token = "", Message = "Logged Out" });
         }
 
-        private async Task<User?> ValidateUser(LoginCredentials credentials)
+        private async Task<ApplicationUser?> ValidateUser(LoginCredentials credentials)
         {
             var user = await userManager.FindByNameAsync(credentials.Username);
 

@@ -1,6 +1,8 @@
 using HortasIndoor.Api.Configuration;
+using HortasIndoor.Core.Interfaces;
 using HortasIndoor.Core.Models;
 using HortasIndoor.DataAccess.Data;
+using HortasIndoor.DataAccess.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +17,11 @@ builder.Services.AddDbContext<HIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HIContext"))
     );
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<HIContext>();
+
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 
 var jwtSection = builder.Configuration.GetSection("JwtBearerTokenSettings");
 

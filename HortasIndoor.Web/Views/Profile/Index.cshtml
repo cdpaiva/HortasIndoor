@@ -1,0 +1,12 @@
+﻿@model List<HortasIndoor.Core.Models.ApplicationUser>;
+@{
+}
+
+<h1>Usuários cadastrados</h1>
+
+@foreach(var user in @Model) 
+{
+    <div>
+        <p>@user.UserName</p>
+    </div>
+}
