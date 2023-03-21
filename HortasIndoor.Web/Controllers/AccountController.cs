@@ -32,11 +32,10 @@ namespace HortasIndoor.Web.Controllers
                         return View();
                     }
                     
-                    var token = await response.Content.ReadFromJsonAsync<TokenResponse>();
+                    var responseContent = await response.Content.ReadFromJsonAsync<TokenResponse>();
 
-                    _logger.LogInformation(token.token);
-                    
-                    HttpContext.Session.SetString("token", token.token);
+                    HttpContext.Session.SetString("Token", responseContent.Token);
+                    HttpContext.Session.SetString("Id", responseContent.Id);
 
                     return RedirectToAction("Index", "Profile");
                 }
@@ -59,6 +58,12 @@ namespace HortasIndoor.Web.Controllers
 
                 return Redirect("Login");
             }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("Login");
         }
     }
 }

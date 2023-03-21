@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -71,7 +72,8 @@ namespace HortasIndoor.Api.Controllers
             }
 
             var token = GenerateToken(user);
-            return Ok(new { Token = token, Message = "Success" });
+            logger.LogInformation(new { Token = token, Id = user.Id }.ToString());
+            return Ok(new { Token = token, Id = user.Id });
         }
 
         [HttpPost]

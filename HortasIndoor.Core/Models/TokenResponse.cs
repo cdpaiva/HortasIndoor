@@ -8,7 +8,7 @@ namespace HortasIndoor.Core.Models
 {
     public class TokenResponse
     {
-        public string token { get; set; }
-        public string message { get; set; }
+        public string Token { get; set; }
+        public string Id { get; set; }
     }
 }

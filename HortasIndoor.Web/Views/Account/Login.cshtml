@@ -7,21 +7,28 @@
     <p>@ViewBag.Token</p>
 }
 
-
-<h3>Faça Login</h3>
+<h1>Bem vindo(a) de volta</h1>
+<h3>Login</h3>
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-        <div class="mb-3">
-        @Html.Label("Username", "Username:", new { @class = "form-label" })
-        @Html.TextBox("Username", Model?.Username, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger"})
-        </div>
-        <div class="mb-3">
-        @Html.Label("Password", "Password:", new { @class = "form-label" })
-        @Html.Password("Password", Model?.Password, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-        </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="mb-3">
+            @Html.Label("Username", "Username:", new { @class = "form-label" })
+            @Html.TextBox("Username", Model?.Username, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger"})
+            </div>
+            <div class="mb-3">
+            @Html.Label("Password", "Password:", new { @class = "form-label" })
+            @Html.Password("Password", Model?.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
 
-        <input class="btn btn-primary" type="submit" value="Enviar" />
+            <input class="btn btn-primary" type="submit" value="Enviar" />
+        </div>
+        <div>
+            <p>Ainda não possui uma conta? <a href="/Account/Register">Registrar</a></p>
+        </div>
+    </div>
 }

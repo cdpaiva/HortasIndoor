@@ -1,6 +1,8 @@
 ﻿using HortasIndoor.Core.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace HortasIndoor.Web.Controllers
 {
@@ -15,28 +17,34 @@ namespace HortasIndoor.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            logger.LogInformation("Index - profile");
-            List<ApplicationUser> users;
+            var userId = HttpContext.Session.GetString("Id");
+            var token = HttpContext.Session.GetString("Token");
 
-            var token = HttpContext.Session.GetString("token");
+            ViewBag.UserId = userId;
+            ViewBag.Token = token;
 
-            logger.LogInformation(token);
+            //logger.LogInformation("Index - profile");
+            //List<ApplicationUser> users;
 
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            //var token = HttpContext.Session.GetString("token");
 
-                using (var res = await httpClient.GetAsync("https://localhost:5001/api/Profile/Users"))
-                {
-                    var content = await res.Content.ReadAsStringAsync();
-                    var status = res.StatusCode.ToString();
+            //logger.LogInformation(token);
 
-                    logger.LogInformation(content);
-                    logger.LogInformation(status);
-                    //users = await res.Content.ReadFromJsonAsync<List<ApplicationUser>>();
+            //using (var httpClient = new HttpClient())
+            //{
+            //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                }
-            }
+            //    using (var res = await httpClient.GetAsync("https://localhost:5001/api/Profile/Users"))
+            //    {
+            //        var content = await res.Content.ReadAsStringAsync();
+            //        var status = res.StatusCode.ToString();
+
+            //        logger.LogInformation(content);
+            //        logger.LogInformation(status);
+            //        //users = await res.Content.ReadFromJsonAsync<List<ApplicationUser>>();
+
+            //    }
+            //}
             return View();
         }
     }
