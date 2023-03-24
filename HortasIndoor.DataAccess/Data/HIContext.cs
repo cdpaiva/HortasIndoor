@@ -12,6 +12,13 @@ namespace HortasIndoor.DataAccess.Data
     public class HIContext : IdentityDbContext<ApplicationUser>
     {
         public HIContext(DbContextOptions<HIContext> options) : base(options) { }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.Photos)
+                .WithOne(p => p.User);
+        }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
