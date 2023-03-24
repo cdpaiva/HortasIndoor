@@ -13,5 +13,6 @@ namespace HortasIndoor.Core.Interfaces
         public List<ApplicationUser> GetAll();
         public ApplicationUser GetById(string id);
         public Task<ApplicationUser> Update(ApplicationUser user);
+        public Task<ApplicationUser> AddPhoto(string id, Photo photo);
     }
 }

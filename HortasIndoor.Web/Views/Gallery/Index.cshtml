@@ -1,25 +1,28 @@
 ﻿@model HortasIndoor.Core.Models.ApplicationUser;
 @{
 }
-
 <div class="row">
     <div class="col-3">
         <p class="text-secondary fs-6 mb-0">Username</p>
         <p class="fs-5">@Model.UserName</p>
         <p class="text-secondary fs-6 mb-0">E-Mail</p>
         <p class="fs-5">@Model.Email</p>
-        @if(!String.IsNullOrEmpty(Model.Localizacao))
+        @if (!String.IsNullOrEmpty(Model.Localizacao))
         {
             <p class="text-secondary fs-6 mb-0">Localização</p>
             <p class="fs-5">@Model.Localizacao</p>
         }
         <hr />
-        <div>
-        <a href="/Gallery/Index">Galeria</a>
+        <a href="/Gallery">Galeria</a>
         <a href="/Profile/Edit">Editar perfil</a>
-        </div>
     </div>
     <div class="col-9">
-        <h1>Seu feed</h1>
+        <h1>Galeria</h1>
+
+        <a href="/Gallery/New">Adicionar Nova Foto</a>
+
+        @*TODO: Adicionar a visão com as fotos que o usuário possui*@
     </div>
 </div>
+
+<script src="~/js/hideForm.js" type="text/javascript"></script>

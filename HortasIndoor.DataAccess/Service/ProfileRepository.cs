@@ -42,5 +42,20 @@ namespace HortasIndoor.DataAccess.Service
 
             return currentUser;
         }
+
+        public async Task<ApplicationUser> AddPhoto(string id, Photo photo)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                if (user.Photos == null)
+                {
+                    user.Photos = new List<Photo>();
+                }
+                user.Photos.Add(photo);
+                await _context.SaveChangesAsync();
+            }
+            return user;
+        }
     }
 }
