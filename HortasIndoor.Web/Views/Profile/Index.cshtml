@@ -1,8 +1,22 @@
-﻿@model List<HortasIndoor.Core.Models.ApplicationUser>;
+﻿@model HortasIndoor.Core.Models.ApplicationUser;
 @{
 }
 
-<h1>Usuários cadastrados</h1>
-
-<h2>@ViewBag.UserId</h2>
-<h2>@ViewBag.Token</h2>
+<div class="row">
+    <div class="col-3">
+        <p class="text-secondary fs-6 mb-0">Username</p>
+        <p class="fs-5">@Model.UserName</p>
+        <p class="text-secondary fs-6 mb-0">E-Mail</p>
+        <p class="fs-5">@Model.Email</p>
+        @if(!String.IsNullOrEmpty(Model.Localizacao))
+        {
+            <p class="text-secondary fs-6 mb-0">Localização</p>
+            <p class="fs-5">@Model.Localizacao</p>
+        }
+        <hr />
+        <a href="/Profile/Edit">Editar perfil</a>
+    </div>
+    <div class="col-9">
+        <h1>Seu feed</h1>
+    </div>
+</div>

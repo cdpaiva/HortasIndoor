@@ -11,6 +11,7 @@ namespace HortasIndoor.Core.Interfaces
     public interface IProfileRepository
     {
         public List<ApplicationUser> GetAll();
-        public ApplicationUser Get(string id);
+        public ApplicationUser GetById(string id);
+        public Task<ApplicationUser> Update(ApplicationUser user);
     }
 }

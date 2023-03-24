@@ -26,8 +26,26 @@ namespace HortasIndoor.Api.Controllers
         [Route("Users")]
         public async Task<IActionResult> Users()
         {
-            _logger.LogInformation("ENDPOINT REACHED");
+            _logger.LogInformation("Get all users");
             return Ok(_repository.GetAll());
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("/api/Profile/{id}")]
+        public async Task<IActionResult> GetUserById(string id)
+        {
+            _logger.LogInformation("Get user by Id");
+            return Ok(_repository.GetById(id));
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("/api/Profile")]
+        public async Task<IActionResult> Update(ApplicationUser user)
+        {
+            await _repository.Update(user);
+            return Ok();
         }
     }
 }

@@ -25,9 +25,22 @@ namespace HortasIndoor.DataAccess.Service
             return _context.ApplicationUsers.ToList();
         }
 
-        public ApplicationUser Get(string id)
+        public ApplicationUser GetById(string id)
         {
             return _context.ApplicationUsers.Where(u => u.Id == id).First();
+        }
+
+        public async Task<ApplicationUser> Update(ApplicationUser user)
+        {
+            var currentUser = _context.ApplicationUsers.Where(u => u.Id == user.Id).First();
+            if(user.Localizacao!=null)
+            {
+                currentUser.Localizacao = user.Localizacao;
+            }
+            _context.Update(currentUser);
+            await _context.SaveChangesAsync();
+
+            return currentUser;
         }
     }
 }
