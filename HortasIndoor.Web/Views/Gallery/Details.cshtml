@@ -1,0 +1,37 @@
+﻿@model HortasIndoor.Core.ViewModels.GalleryViewModel;
+
+<div>
+    <div class="row">
+        <div class="col-3">
+        <p class="text-secondary fs-6 mb-0">Username</p>
+        <p class="fs-5">@Model.UserName</p>
+        <p class="text-secondary fs-6 mb-0">E-Mail</p>
+        <p class="fs-5">@Model.Email</p>
+            @if (!String.IsNullOrEmpty(Model.Localizacao))
+            {
+                <p class="text-secondary fs-6 mb-0">Localização</p>
+                <p class="fs-5">@Model.Localizacao</p>
+            }
+        <hr />
+        <a href="/Gallery/Index">Galeria</a>
+        <a href="/Profile/Edit">Editar perfil</a>
+    </div>
+        <div class="col-6">
+            @Html.ActionLink(
+            "Deletar Foto",
+            "DeletePhoto",
+            "Gallery",
+            new { id = Model.Photos.First().Id},
+            new { onclick = "return confirm('Deseja realmente deletar esta foto?')" })
+
+
+            <div class="container">
+                <div class="col text-center">
+                    <h4>@Model.Photos.First().Description</h4>
+                    <img src=@String.Format("data:image;base64,{0}", Model.Photos.First().Bytes) alt="picture" style="max-height:500px;" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

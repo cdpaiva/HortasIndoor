@@ -1,4 +1,4 @@
-﻿@model HortasIndoor.Core.Models.ApplicationUser;
+﻿@model HortasIndoor.Core.ViewModels.GalleryViewModel;
 @{
 }
 <div class="row">
@@ -18,10 +18,27 @@
     </div>
     <div class="col-9">
         <h1>Galeria</h1>
-
-        <a href="/Gallery/New">Adicionar Nova Foto</a>
-
-        @*TODO: Adicionar a visão com as fotos que o usuário possui*@
+        <div class="mb-2">
+            <a href="/Gallery/New">Adicionar Nova Foto</a>
+        </div>
+        @if( Model.Photos != null)
+        {
+            <div class="container">
+                <div class="row row-cols-2 gy-2">
+            @foreach(var photo in Model.Photos)
+            {
+                <div class="col">
+                    <img src=@String.Format("data:image;base64,{0}",@photo.Bytes) alt="@photo.Description" width="150" height="150">
+                    <div>
+                        <a asp-controller="Gallery" asp-action="Details" asp-route-id="@photo.Id">@photo.Description</a>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+        } else {
+            <p>Nenhuma foto na galeria</p>
+        }
     </div>
 </div>
 
