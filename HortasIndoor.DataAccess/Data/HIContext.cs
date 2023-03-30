@@ -15,12 +15,18 @@ namespace HortasIndoor.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            // 1..n users and photos
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Photos)
+                .WithOne(p => p.User);
+            // 1..n users and posts
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.Posts)
                 .WithOne(p => p.User);
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Post> Posts { get; set; }
     }
 }
