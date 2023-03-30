@@ -8,15 +8,18 @@
         <p class="fs-5">@Model.UserName</p>
         <p class="text-secondary fs-6 mb-0">E-Mail</p>
         <p class="fs-5">@Model.Email</p>
-        @if(!String.IsNullOrEmpty(Model.Localizacao))
+        @if (!String.IsNullOrEmpty(Model.Localizacao))
         {
             <p class="text-secondary fs-6 mb-0">Localização</p>
             <p class="fs-5">@Model.Localizacao</p>
         }
         <hr />
         <div>
-        <a href="/Gallery/Index">Galeria</a>
-        <a href="/Profile/Edit">Editar perfil</a>
+            <div class="d-flex flex-column">
+                <a href="/Gallery/Index">Galeria</a>
+                <a href="/Profile/Edit">Editar perfil</a>
+                <a href="/Post/New">Novo post</a>
+            </div>
         </div>
     </div>
     <div class="col-9">

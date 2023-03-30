@@ -1,0 +1,16 @@
+﻿@model HortasIndoor.Core.ViewModels.NewPostViewModel;
+
+<h1>Criar novo post</h1>
+
+<form asp-action="New" enctype="multipart/form-data" method="post">
+
+    <input asp-for="UserId" type="hidden" class="form-control" />
+    <div class="form-group">
+        <label asp-for="Text" class="control-label">Texto</label>
+        <input asp-for="Text" class="form-control" />
+        <span asp-validation-for="Text" class="text-danger"></span>
+    </div>
+    <div class="form-group mt-1 mb-1">
+        <input type="submit" value="Criar" class="btn btn-primary" />
+    </div>
+</form>

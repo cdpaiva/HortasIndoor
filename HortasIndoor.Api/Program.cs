@@ -23,6 +23,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
 builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
 
 var jwtSection = builder.Configuration.GetSection("JwtBearerTokenSettings");
 
