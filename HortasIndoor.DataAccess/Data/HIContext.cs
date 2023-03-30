@@ -21,5 +21,6 @@ namespace HortasIndoor.DataAccess.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Photo> Photos { get; set; }
     }
 }

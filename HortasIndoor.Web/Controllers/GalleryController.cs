@@ -8,7 +8,7 @@ namespace HortasIndoor.Web.Controllers
     public class GalleryController : Controller
     {
         private readonly ILogger<GalleryController> _logger;
-        
+
         public GalleryController(ILogger<GalleryController> logger)
         {
             _logger = logger;
@@ -23,13 +23,21 @@ namespace HortasIndoor.Web.Controllers
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Profile/{id}"))
+                using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Gallery/{id}"))
                 {
                     var content = await res.Content.ReadAsStringAsync();
                     var status = res.StatusCode.ToString();
 
                     var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
-                    return View(user);
+                    if (user != null)
+                    {
+                        var viewModel = new GalleryViewModel(user);
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        return Problem("Não foi possível recuperar o usuário");
+                    }
                 }
             }
         }
@@ -73,6 +81,48 @@ namespace HortasIndoor.Web.Controllers
 
                     //var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
                     return RedirectToAction("Index", "Gallery");
+                }
+            }
+        }
+
+        public async Task<IActionResult> DeletePhoto(int id)
+        {
+            var token = HttpContext.Session.GetString("Token");
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using (var res = await httpClient.DeleteAsync($"https://localhost:5001/api/Gallery/{id}"))
+                {
+                    return RedirectToAction("Index", "Gallery");
+                }
+            }
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            ViewBag.PhotoId = id;
+            var userId = HttpContext.Session.GetString("Id");
+            var token = HttpContext.Session.GetString("Token");
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Gallery/{userId}"))
+                {
+                    var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
+                    if (user != null)
+                    {
+                        user.Photos = user.Photos.Where(p => p.Id ==id).ToList();
+                        var viewModel = new GalleryViewModel(user);
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        return Problem("Não foi possível recuperar o usuário");
+                    }
                 }
             }
         }

@@ -22,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<HIContext>();
 
 builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IPhotoRepository, PhotoRepository>();
 
 var jwtSection = builder.Configuration.GetSection("JwtBearerTokenSettings");
 

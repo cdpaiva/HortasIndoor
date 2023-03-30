@@ -57,5 +57,10 @@ namespace HortasIndoor.DataAccess.Service
             }
             return user;
         }
+
+        public async Task<ApplicationUser> GetWithGallery(string id)
+        {
+            return await _context.Users.Include(u=>u.Photos).FirstOrDefaultAsync(u => u.Id==id);
+        }
     }
 }
