@@ -1,4 +1,5 @@
 ﻿using HortasIndoor.Core.Models;
+using HortasIndoor.Core.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -24,19 +25,27 @@ namespace HortasIndoor.Web.Controllers
             var id= HttpContext.Session.GetString("Id");
             var token = HttpContext.Session.GetString("Token");
 
+            ApplicationUser user;
+            List<Post> posts;
+
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Profile/{id}"))
                 {
-                    var content = await res.Content.ReadAsStringAsync();
-                    var status = res.StatusCode.ToString();
+                    user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
+                    //return View(user);
+                }
 
-                    var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
-                    return View(user);
+                using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Post"))
+                {
+                    posts = await res.Content.ReadFromJsonAsync<List<Post>>();
+                    posts = posts.OrderByDescending(p => p.Created_at).ToList();
+                    //return View(user);
                 }
             }
+            return View(new InitialPageViewModel(user, posts));
         }
 
         public IActionResult Edit()

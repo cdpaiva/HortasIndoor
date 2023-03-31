@@ -1,17 +1,17 @@
-﻿@model HortasIndoor.Core.Models.ApplicationUser;
+﻿@model HortasIndoor.Core.ViewModels.InitialPageViewModel;
 @{
 }
 
 <div class="row">
     <div class="col-3">
         <p class="text-secondary fs-6 mb-0">Username</p>
-        <p class="fs-5">@Model.UserName</p>
+        <p class="fs-5">@Model.User.UserName</p>
         <p class="text-secondary fs-6 mb-0">E-Mail</p>
-        <p class="fs-5">@Model.Email</p>
-        @if (!String.IsNullOrEmpty(Model.Localizacao))
+        <p class="fs-5">@Model.User.Email</p>
+        @if (!String.IsNullOrEmpty(Model.User.Localizacao))
         {
             <p class="text-secondary fs-6 mb-0">Localização</p>
-            <p class="fs-5">@Model.Localizacao</p>
+            <p class="fs-5">@Model.User.Localizacao</p>
         }
         <hr />
         <div>
@@ -24,5 +24,25 @@
     </div>
     <div class="col-9">
         <h1>Seu feed</h1>
+        <hr />
+        <div class="p-2">
+        @foreach (var Post in Model.Posts)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                <div class="d-flex justify-content-between p-2">
+                    <div>@Post.User.UserName</div>
+                    <div>@DateTime.Parse(@Post.Created_at).ToShortDateString()</div>
+                </div>
+                </div>
+                <div class="card-text p-2">@Post.Text</div>
+                <div class="w-25 p-2">
+                    <button type="button" class="btn btn-primary">
+                    Curtidas <span class="badge rounded-pill bg-secondary">@Post.Likes</span>
+                    </button>
+                </div>
+            </div>
+        }
+        </div>
     </div>
 </div>

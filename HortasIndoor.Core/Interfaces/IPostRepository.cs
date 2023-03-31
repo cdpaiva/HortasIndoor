@@ -10,5 +10,6 @@ namespace HortasIndoor.Core.Interfaces
     public interface IPostRepository
     {
         public Task<Post> Create(string Id, Post post);
+        public Task<IEnumerable<Post>> GetAll();
     }
 }

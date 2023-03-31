@@ -1,6 +1,7 @@
 ﻿using HortasIndoor.Core.Interfaces;
 using HortasIndoor.Core.Models;
 using HortasIndoor.DataAccess.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace HortasIndoor.DataAccess.Service
                 await _context.SaveChangesAsync();
             }
             return post;
+        }
+
+        public async Task<IEnumerable<Post>> GetAll()
+        {
+            return await _context.Posts.Include(p=>p.User).ToListAsync();
         }
     }
 }

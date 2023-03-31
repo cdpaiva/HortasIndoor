@@ -16,6 +16,14 @@ namespace HortasIndoor.Api.Controllers
             _repository = repository;
         }
 
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetAll()
+        {
+            var posts = await _repository.GetAll();
+            return Ok(posts);
+        }
+
         [HttpPost]
         [Route("{id}")]
         public async Task<IActionResult> Create(string id, Post post)
