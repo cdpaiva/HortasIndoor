@@ -31,7 +31,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                 <div class="d-flex justify-content-between p-2">
-                    <div>@Post.User.UserName</div>
+                    <a href="/Profile/User?id=@Post.User.Id">@Post.User.UserName</a>
                     <div>@DateTime.Parse(@Post.Created_at).ToShortDateString()</div>
                 </div>
                 </div>

@@ -1,0 +1,45 @@
+﻿@model HortasIndoor.Core.ViewModels.GalleryViewModel;
+@{
+}
+
+<div class="row">
+    <div class="col-3">
+        <p class="text-secondary fs-6 mb-0">Username</p>
+        <p class="fs-5">@Model.UserName</p>
+        <p class="text-secondary fs-6 mb-0">E-Mail</p>
+        <p class="fs-5">@Model.Email</p>
+        @if (!String.IsNullOrEmpty(Model.Localizacao))
+        {
+            <p class="text-secondary fs-6 mb-0">Localização</p>
+            <p class="fs-5">@Model.Localizacao</p>
+        }
+        <hr />
+    </div>
+    <div class="col-9">
+        <h1>Página de perfil de @Model.UserName</h1>
+        <hr />
+        <div class="col-9">
+            <h3>Galeria</h3>
+            @if (Model.Photos != null && Model.Photos.Count != 0)
+            {
+                <div class="container">
+                    <div class="row row-cols-2 gy-2">
+                        @foreach (var photo in Model.Photos)
+                        {
+                            <div class="col">
+                                <img src=@String.Format("data:image;base64,{0}",@photo.Bytes) alt="@photo.Description" width="150" height="150">
+                                <div>
+                                    <p>@photo.Description</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Nenhuma foto na galeria</p>
+            }
+        </div>
+    </div>
+</div>

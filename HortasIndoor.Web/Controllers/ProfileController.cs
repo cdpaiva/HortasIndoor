@@ -48,6 +48,34 @@ namespace HortasIndoor.Web.Controllers
             return View(new InitialPageViewModel(user, posts));
         }
 
+        public async Task<IActionResult> User([FromQuery]string id)
+        {
+            //var id = HttpContext.Session.GetString("Id");
+            var token = HttpContext.Session.GetString("Token");
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using (var res = await httpClient.GetAsync($"https://localhost:5001/api/Gallery/{id}"))
+                {
+                    var content = await res.Content.ReadAsStringAsync();
+                    var status = res.StatusCode.ToString();
+
+                    var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
+                    if (user != null)
+                    {
+                        var viewModel = new GalleryViewModel(user);
+                        return View("User", viewModel);
+                    }
+                    else
+                    {
+                        return Problem("Não foi possível recuperar o usuário");
+                    }
+                }
+            }
+        }
+
         public IActionResult Edit()
         {
             var id = HttpContext.Session.GetString("Id");
