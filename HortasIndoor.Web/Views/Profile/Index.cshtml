@@ -37,9 +37,9 @@
                 </div>
                 <div class="card-text p-2">@Post.Text</div>
                 <div class="w-25 p-2">
-                    <button type="button" class="btn btn-primary">
-                    Curtidas <span class="badge rounded-pill bg-secondary">@Post.Likes</span>
-                    </button>
+                    <a href="/Post/Like?postId=@Post.Id" class="btn btn-primary">
+                    Curtidas <span class="badge rounded-pill bg-secondary">@Post.Likes.Count</span>
+                    </a>
                 </div>
             </div>
         }

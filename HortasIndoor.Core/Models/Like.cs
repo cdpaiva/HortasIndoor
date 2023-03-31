@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace HortasIndoor.Core.Models
 {
-    public class Post
+    public class Like
     {
         public int Id { get; set; }
-        public string Text { get; set; }
-        public string Created_at { get; set; }
+        [JsonIgnore]
+        public Post? Post { get; set; }
+        [JsonIgnore]
         public ApplicationUser? User { get; set; }
-        public List<Like>? Likes { get; set; }
     }
 }

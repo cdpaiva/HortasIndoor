@@ -12,7 +12,9 @@ namespace HortasIndoor.Core.Models
     {
         public string? Localizacao { get; set; }
         public List<Photo>? Photos { get; set; }
+        public List<Like>? Likes { get; set; }
         [JsonIgnore]
         public List<Post>? Posts { get; set; }
+
     }
 }

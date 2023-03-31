@@ -38,5 +38,13 @@ namespace HortasIndoor.Api.Controllers
             }
             return Ok();
         }
+
+        [HttpPost]
+        [Route("{userId}/{postId}")]
+        public async Task<IActionResult> Like(string userId, int postId)
+        {
+            await _repository.AddLike(postId, userId);
+            return Ok();
+        }
     }
 }

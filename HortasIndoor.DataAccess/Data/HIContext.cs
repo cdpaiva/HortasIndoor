@@ -23,10 +23,17 @@ namespace HortasIndoor.DataAccess.Data
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Posts)
                 .WithOne(p => p.User);
+            builder.Entity<ApplicationUser>()
+                .HasMany(u => u.Likes)
+                .WithOne(l => l.User);
+            builder.Entity<Post>()
+                .HasMany(p => p.Likes)
+                .WithOne(l => l.Post);
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Like> Like { get; set; }
     }
 }

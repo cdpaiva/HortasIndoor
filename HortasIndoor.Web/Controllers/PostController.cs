@@ -22,7 +22,6 @@ namespace HortasIndoor.Web.Controllers
             {
                 Text= postViewModel.Text,
                 Created_at = DateTime.Now.ToString(),
-                Likes = 0
             };
 
             using (var httpClient = new HttpClient())
@@ -30,6 +29,26 @@ namespace HortasIndoor.Web.Controllers
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 using (var res = await httpClient.PostAsJsonAsync<Post>($"https://localhost:5001/api/Post/{userId}", post))
+                {
+                    //var content = await res.Content.ReadAsStringAsync();
+                    var status = res.StatusCode.ToString();
+
+                    //var user = await res.Content.ReadFromJsonAsync<ApplicationUser>();
+                    return RedirectToAction("Index", "Profile");
+                }
+            }
+        }
+
+        public async Task<IActionResult> Like(int postId)
+        {
+            var userId = HttpContext.Session.GetString("Id");
+            var token = HttpContext.Session.GetString("Token");
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                using (var res = await httpClient.PostAsJsonAsync($"https://localhost:5001/api/Post/{userId}/{postId}", new { }))
                 {
                     //var content = await res.Content.ReadAsStringAsync();
                     var status = res.StatusCode.ToString();

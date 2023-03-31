@@ -11,5 +11,6 @@ namespace HortasIndoor.Core.Interfaces
     {
         public Task<Post> Create(string Id, Post post);
         public Task<IEnumerable<Post>> GetAll();
+        public Task<Post> AddLike(int postId, string userId);
     }
 }
