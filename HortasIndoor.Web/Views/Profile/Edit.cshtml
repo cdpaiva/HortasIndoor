@@ -1,4 +1,4 @@
-﻿@model HortasIndoor.Core.Models.ApplicationUser
+﻿@model HortasIndoor.Core.ViewModels.EditUserViewModel;
 
 @{
     ViewData["Title"] = "View";
@@ -9,13 +9,17 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Update" method="post">
-            <input type="hidden" asp-for="Id" value=@Model.Id />
+        <form asp-action="Update" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="Localizacao" class="control-label"></label>
                 <input asp-for="Localizacao" class="form-control" />
                 <span asp-validation-for="Localizacao" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="File" class="control-label"></label>
+                <input asp-for="File" type="file" class="form-control" />
+                <span asp-validation-for="File" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Editar" class="btn btn-primary" />

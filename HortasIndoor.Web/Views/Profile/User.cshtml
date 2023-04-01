@@ -4,6 +4,12 @@
 
 <div class="row">
     <div class="col-3">
+        @if (Model.Avatar != null)
+        {
+            <div class="m-auto">
+                <img src=@String.Format("data:image;base64,{0}",Convert.ToBase64String(Model.Avatar)) alt="Avatar" width="150" height="150">
+            </div>
+        }
         <p class="text-secondary fs-6 mb-0">Username</p>
         <p class="fs-5">@Model.UserName</p>
         <p class="text-secondary fs-6 mb-0">E-Mail</p>

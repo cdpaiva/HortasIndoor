@@ -4,6 +4,12 @@
 
 <div class="row">
     <div class="col-3">
+        @if (Model.User.Avatar != null)
+        {
+            <div class="m-auto">
+                <img src=@String.Format("data:image;base64,{0}",Convert.ToBase64String(Model.User.Avatar)) alt="Avatar" width="150" height="150">
+            </div>
+        }
         <p class="text-secondary fs-6 mb-0">Username</p>
         <p class="fs-5">@Model.User.UserName</p>
         <p class="text-secondary fs-6 mb-0">E-Mail</p>
@@ -26,23 +32,29 @@
         <h1>Seu feed</h1>
         <hr />
         <div class="p-2">
-        @foreach (var Post in Model.Posts)
-        {
-            <div class="card mb-3">
-                <div class="card-header">
-                <div class="d-flex justify-content-between p-2">
-                    <a href="/Profile/User?id=@Post.User.Id">@Post.User.UserName</a>
-                    <div>@DateTime.Parse(@Post.Created_at).ToShortDateString()</div>
+            @foreach (var Post in Model.Posts)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between p-2">
+                            <div>
+                                @if (Post.User != null && Post.User.Avatar != null)
+                                {
+                                    <img src=@String.Format("data:image;base64,{0}",Convert.ToBase64String(Post.User.Avatar)) alt="Avatar" width="35" height="35" class="rounded-circle">
+                                }
+                                <a href="/Profile/User?id=@Post.User.Id">@Post.User.UserName</a>
+                            </div>
+                            <div>@DateTime.Parse(@Post.Created_at).ToShortDateString()</div>
+                        </div>
+                    </div>
+                    <div class="card-text p-2">@Post.Text</div>
+                    <div class="w-25 p-2">
+                        <a href="/Post/Like?postId=@Post.Id" class="btn btn-primary text-s">
+                            Curtir <span class="badge rounded-pill bg-secondary">@Post.Likes.Count</span>
+                        </a>
+                    </div>
                 </div>
-                </div>
-                <div class="card-text p-2">@Post.Text</div>
-                <div class="w-25 p-2">
-                    <a href="/Post/Like?postId=@Post.Id" class="btn btn-primary">
-                    Curtidas <span class="badge rounded-pill bg-secondary">@Post.Likes.Count</span>
-                    </a>
-                </div>
-            </div>
-        }
+            }
         </div>
     </div>
 </div>
