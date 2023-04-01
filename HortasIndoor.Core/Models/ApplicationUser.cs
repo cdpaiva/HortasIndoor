@@ -11,6 +11,7 @@ namespace HortasIndoor.Core.Models
     public class ApplicationUser : IdentityUser
     {
         public string? Localizacao { get; set; }
+        public byte[]? Avatar { get; set; }
         public List<Photo>? Photos { get; set; }
         public List<Like>? Likes { get; set; }
         [JsonIgnore]

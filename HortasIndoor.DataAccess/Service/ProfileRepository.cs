@@ -37,6 +37,10 @@ namespace HortasIndoor.DataAccess.Service
             {
                 currentUser.Localizacao = user.Localizacao;
             }
+            if(user.Avatar!=null)
+            {
+                currentUser.Avatar = user.Avatar;
+            }
             _context.Update(currentUser);
             await _context.SaveChangesAsync();
 

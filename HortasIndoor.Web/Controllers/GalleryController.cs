@@ -49,9 +49,6 @@ namespace HortasIndoor.Web.Controllers
 
         public async Task<IActionResult> UploadPhoto(PhotoViewModel photoModel)
         {
-            _logger.LogInformation("Started the POST request on the cliente");
-            _logger.LogInformation($"Image received {photoModel.File.Length}");
-
             var id = HttpContext.Session.GetString("Id");
             var token = HttpContext.Session.GetString("Token");
 
@@ -67,8 +64,6 @@ namespace HortasIndoor.Web.Controllers
                 FileExtension = photoModel.File.ContentType,
                 Size = bytes.Length
             };
-
-            _logger.LogInformation("Created a new Photo Object");
 
             using (var httpClient = new HttpClient())
             {

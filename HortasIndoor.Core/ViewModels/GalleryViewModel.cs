@@ -12,6 +12,7 @@ namespace HortasIndoor.Core.ViewModels
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Localizacao { get; set; }
+        public byte[] Avatar { get; set; }
         public List<DisplayPhotoViewModel> Photos { get; set; }
 
         public GalleryViewModel() { }
@@ -23,6 +24,10 @@ namespace HortasIndoor.Core.ViewModels
             if (user.Localizacao != null)
             {
                 Localizacao = user.Localizacao;
+            }
+            if (user.Avatar != null)
+            {
+                Avatar = user.Avatar;
             }
             Photos = new List<DisplayPhotoViewModel>();
 

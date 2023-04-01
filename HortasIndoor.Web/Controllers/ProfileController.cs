@@ -78,28 +78,43 @@ namespace HortasIndoor.Web.Controllers
 
         public IActionResult Edit()
         {
-            var id = HttpContext.Session.GetString("Id");
-            var user = new ApplicationUser { Id= id };
-            return View(user);
+            //var id = HttpContext.Session.GetString("Id");
+            //var user = new ApplicationUser { Id= id };
+            return View();
         }
 
-        public async Task<IActionResult> Update(ApplicationUser user)
+        public async Task<IActionResult> Update(EditUserViewModel userViewModel)
         {
+            var id = HttpContext.Session.GetString("Id");
             var token = HttpContext.Session.GetString("Token");
+            var avatar = Array.Empty<byte>();
+
+            logger.LogInformation(userViewModel.File.Length.ToString());
+            if (userViewModel.File != null)
+            {
+                var memoryStream = new MemoryStream();
+                await userViewModel.File.CopyToAsync(memoryStream);
+                avatar = memoryStream.ToArray();
+                memoryStream.Dispose();
+            }
+
+            var user = new ApplicationUser
+            {
+                Id = id,
+                Localizacao = userViewModel.Localizacao,
+                Avatar = avatar,
+            };
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-
                 using (var response = await httpClient.PutAsync("https://localhost:5001/api/Profile", content))
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     {
                         return View();
                     }
-                    logger.LogInformation(response.StatusCode.ToString());
-                    logger.LogInformation(await response.Content.ReadAsStringAsync());
                 }
             }
 
