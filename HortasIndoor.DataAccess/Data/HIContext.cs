@@ -15,6 +15,9 @@ namespace HortasIndoor.DataAccess.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<Photo>()
+                .Property(p => p.Size)
+                .HasColumnType("decimal(18,4)");
             // 1..n users and photos
             builder.Entity<ApplicationUser>()
                 .HasMany(u => u.Photos)

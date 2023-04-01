@@ -4,6 +4,7 @@ using HortasIndoor.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HortasIndoor.DataAccess.Migrations
 {
     [DbContext(typeof(HIContext))]
-    partial class HIContextModelSnapshot : ModelSnapshot
+    [Migration("20230401122614_PhotoSizePrecision")]
+    partial class PhotoSizePrecision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
